@@ -1,0 +1,170 @@
+UGANDA INSTITUTE OF INFORMATION AND COMMUNICATION TECHNOLOGY
+DEPARTMENT: BUSINESS COMPUTING
+Name: KHAINZA RITAH
+Registration Number: 2025/DBC/DAY/2033
+
+V.bExercise
+
+Question 1: Design and explain a VB form for a Simple Login System using Labels, TextBoxes, and Buttons. Include brief code to validate username and password.
+
+Form Design:
+Form name is frmLogin
+Label1 name lblUsername Text Username
+TextBox1 name txtUsername
+Label2 name lblPassword Text Password
+TextBox2 name txtPassword PasswordChar is _
+Button1 name btnLogin Text Login
+Button2 name btnCancel Text Cancel
+Label3 name lblMessage for error
+
+Code:
+Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+If txtUsername.Text = "" Or xtPassword.Text = "" Then
+MessageBox.Show("Please enter both username and password", "Error", MessageBoxButtons.OK, essageBoxIcon.Warning)
+Return
+End If
+If txtUsername.Text = "admin" And txtPassword.Text = "1234" Then
+MessageBox.Show("Login Successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+Dim main As New frmMain()
+main.Show()
+Me.Hide()
+Else
+lblMessage.Text = "Invalid username or password!"
+End If
+End Sub
+
+Question 2: You are developing a Visual Basic application for a shopping mall. The application calculates discounts based on the total amount spent: If the total is less than $100, no discount is applied. If the total is between $100 and $500, a 10% discount is applied. If the total is more than $500, a 20% discount is applied. Write a Visual Basic code snippet using If, ElseIf, Else to calculate the discount and the final amount. Include a loop to process three customers purchases.
+
+Code:
+Module DiscountModule
+Sub Main()
+Dim totalAmount, discount, finalAmount As Double
+For i As Integer = 1 To 3
+Console.Write("Enter total amount for Customer " & i & ": $")
+totalAmount = CDbl(Console.ReadLine())
+If totalAmount < 100 Then
+discount = 0
+ElseIf totalAmount >= 100 And totalAmount <= 500 Then
+discount = totalAmount _ 0.1
+Else
+discount = totalAmount * 0.2
+End If
+finalAmount = totalAmount - discount
+Console.WriteLine("Total Amount: $" & totalAmount)
+Console.WriteLine("Discount: $" & discount)
+Console.WriteLine("Final Amount to Pay: $" & finalAmount)
+Next
+End Sub
+End Module
+
+Question 3: Define a class and an object in Visual Basic. Provide a simple example. Differentiate between Inheritance and Polymorphism in OOP. What is Encapsulation, and why is it important in Object-Oriented Programming? Describe the purpose of Constructors and Destructors in VB classes
+
+Class is a blueprint or template that defines properties and methods. Object is an instance of a class.
+Public Class Student
+Public Name As String
+Public Age As Integer
+Public Sub Display()
+MessageBox.Show("Name: " & Name)
+End Sub
+End Class
+Dim s1 As New Student()
+http://S.6 Name = "Ritah"
+
+Inheritance vs Polymorphism:
+Inheritance allows child class to inherit properties from parent class for reusability and uses Inherits keyword.
+Polymorphism allows same method to have different forms and behave differently in different classes and uses Overridable and Overrides.
+
+Encapsulation is wrapping data and methods into a single unit and restricting direct access using Private modifier. It is important because it provides data security, controls access through properties, and makes code maintainable.
+
+Constructors and Destructors:
+Constructor is Sub New(). It is called automatically when object is created to initialize values.
+Destructor is Sub Finalize(). It is called when object is destroyed to clean up resources like closing files.
+
+Question 4: Identify and explain three uses of Collections in VB applications. Write short notes on Message Boxes and their types. Explain how the Solution Explorer assists in project management within Visual Studio.
+
+Three Uses of Collections:
+1. Storing groups of data dynamically using List and ArrayList
+2. Key-Value lookup using Dictionary to store ID and Name for fast searching
+3. Managing controls on a form like ListBox.Items and ComboBox.Items
+
+Message Boxes and Their Types:
+MessageBox displays dialog with message to user
+Types by Icon: Information, Warning, Error, Question
+Types by Buttons: OK, OKCancel, YesNo, YesNoCancel, RetryCancel
+
+Solution Explorer:
+Solution Explorer shows all files, forms, modules and references in the project. It allows adding and removing files, renaming files, navigating quickly between code, and managing references and dependencies.
+
+Question 5: You are developing a student grade management system for a secondary school. Create a VB application that allows teachers to input student marks and generate performance reports.
+
+Part A: Input and Validation (6 marks) Design a form with textboxes for student name and marks in 4 course units (ICT, VisualBasic, Research methods and Cyber & computer law). Write validation code to ensure all fields are filled and marks are numeric values between 0-100, displaying appropriate error messages for invalid inputs.
+
+Private Function ValidateInput() As Boolean
+If txtStudentName.Text = "" Or txtICT.Text = "" Or txtVB.Text = "" Or txtResearch.Text = "" Or txtCyberLaw.Text = "" Then
+MessageBox.Show("All fields must be filled!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+Return False
+End If
+Dim marks() As TextBox = {txtICT, txtVB, txtResearch, txtCyberLaw}
+For Each tb As TextBox In marks
+If Not IsNumeric(tb.Text) Or Val(tb.Text) < 0 Or Val(tb.Text) > 100 Then
+MessageBox.Show("Marks must be numeric between 0-100", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+Return False
+End If
+Next
+Return True
+End Function
+
+Part B: Calculations and Grading (8 marks) Implement calculations for total marks, average percentage, and letter grades (A:90-100, B:80-89, C:70-79, D:60-69, F:below 60). Determine pass/fail status based on average ≥60%. Use proper variables and efficient logic.
+
+Function GetGrade(mark As Double) As String
+If mark >= 90 Then Return "A"
+ElseIf mark >= 80 Then Return "B"
+ElseIf mark >= 70 Then Return "C"
+ElseIf mark >= 60 Then Return "D"
+Else Return "F"
+End If
+End Function
+
+Private Sub btnCalculate_Click(sender As Object, e As EventArgs) Handles http://btnCalculate.Click
+If Not ValidateInput() Then Exit Sub
+Dim ict As Double = CDbl(txtICT.Text)
+Dim vb As Double = CDbl(txtVB.Text)
+Dim research As Double = CDbl(txtResearch.Text)
+Dim cyber As Double = CDbl(txtCyberLaw.Text)
+Dim total As Double = ict + vb + research + cyber
+Dim average As Double = total / 4
+Dim overallGrade As String = GetGrade(average)
+Dim status As String = If(average >= 60, "PASS", "FAIL")
+lblTotal.Text = "Total: " & total
+lblAverage.Text = "Average: " & average.ToString("0.00") & "%"
+lblGrade.Text = "Overall Grade: " & overallGrade
+lblStatus.Text = "Status: " & status
+End Sub
+
+Part C: Output and Reporting (6 marks) Display formatted results showing student name, subject marks with grades, total, average, overall grade, and pass/fail status. Include buttons to clear fields and save results to a text file with proper file handling.*
+
+Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+txtStudentName.Clear()
+txtICT.Clear()
+txtVB.Clear()
+txtResearch.Clear()
+txtCyberLaw.Clear()
+End Sub
+
+Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+Try
+Dim filePath As String = "C:\Results\" & txtStudentName.Text & "_Report.txt"
+System.IO.Directory.CreateDirectory("C:\Results")
+Using writer As New http://System.IO.StreamWriter(filePath)
+writer.WriteLine("STUDENT PERFORMANCE REPORT")
+writer.WriteLine("Name: " & txtStudentName.Text)
+writer.WriteLine("Total: " & lblTotal.Text)
+writer.WriteLine("Average: " & lblAverage.Text)
+/writer.WriteLine("Grade: " & lblGrade.Text)
+writer.WriteLine("Status: " & lblStatus.Text)
+End Using
+MessageBox.Show("Results saved successfully")
+Catch ex As Exception
+MessageBox.Show("Error: " & ex.Message)
+End Try
+End Sub
